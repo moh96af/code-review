@@ -8,7 +8,7 @@ A set of skills that turn Claude Code into a code review co-pilot for Bitbucket 
 |-------|---------|-------------|
 | [review](./review/) | `/code-review:review <branch>` | Review someone else's PR — analyzes diff, spots bugs/security/performance issues, drafts comments |
 | [verify-fixes](./verify-fixes/) | `/code-review:verify-fixes <pr-url>` | Check if a PR author resolved your review comments |
-| [address-feedback](./addressing-feedback/) | `/code-review:address-feedback <pr-url>` | Fix review comments left on your own PR |
+| [address-feedback](./address-feedback/) | `/code-review:address-feedback <pr-url>` | Fix review comments left on your own PR |
 
 ## Installation
 
