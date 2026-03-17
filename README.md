@@ -34,27 +34,26 @@ The `verify-fixes` and `address-feedback` skills require a Bitbucket MCP server 
 
 #### Setup
 
-1. Generate a Bitbucket App Password at: `https://bitbucket.org/account/settings/app-passwords/`
-   - Required permissions: **Repositories: Read**, **Pull requests: Read/Write**
+1. Generate an Atlassian API token at: `https://id.atlassian.com/manage-profile/security/api-tokens`
 
 2. Add to your Claude Code settings (project or user level):
 
 ```json
 {
   "mcpServers": {
-    "Bitbucket MCP Server": {
+    "bitbucket": {
       "command": "npx",
       "args": ["-y", "@aashari/mcp-server-atlassian-bitbucket"],
       "env": {
-        "ATLASSIAN_BITBUCKET_USERNAME": "your-username",
-        "ATLASSIAN_BITBUCKET_APP_PASSWORD": "your-app-password"
+        "ATLASSIAN_USER_EMAIL": "your-email@example.com",
+        "ATLASSIAN_API_TOKEN": "your-api-token"
       }
     }
   }
 }
 ```
 
-3. Restart Claude Code. Verify with `/mcp` — you should see the Bitbucket MCP Server listed and connected.
+3. Restart Claude Code. Verify with `/mcp` — you should see the Bitbucket MCP server listed and connected.
 
 > **Note:** The `review` skill works without Bitbucket MCP — it only needs local git access. The MCP is only required for skills that interact with PR comments via the Bitbucket API.
 
