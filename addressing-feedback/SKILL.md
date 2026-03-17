@@ -1,5 +1,5 @@
 ---
-name: addressing-feedback
+name: code-review:address-feedback
 description: Use when fixing review comments on your own Bitbucket PR. Triggers on "fix pr comments", "address review feedback", "fix review comments", "what did the reviewer say", "handle PR feedback", or when given a Bitbucket PR URL to fix comments on.
 ---
 
@@ -13,7 +13,7 @@ Requires the [Bitbucket MCP server](#bitbucket-mcp-setup) to be configured.
 
 ## Trigger
 
-`/code-review:addressing-feedback <bitbucket-pr-url>`
+`/code-review:address-feedback <bitbucket-pr-url>`
 
 ---
 

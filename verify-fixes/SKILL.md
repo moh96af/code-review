@@ -1,5 +1,5 @@
 ---
-name: verify-fixes
+name: code-review:verify-fixes
 description: Use when checking if a PR author resolved your review comments, following up on a previously reviewed PR, or verifying comment resolution on Bitbucket pull requests. Triggers on "did he fix my comments", "check if resolved", "follow up on PR".
 ---
 

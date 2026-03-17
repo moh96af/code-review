@@ -1,5 +1,5 @@
 ---
-name: review
+name: code-review:review
 description: Use when reviewing someone else's PR or branch — analyzes git diff, identifies bugs/performance/security/quality issues, answers questions about the code, and drafts review comments for copy-paste into Bitbucket or GitHub.
 ---
 
