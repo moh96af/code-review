@@ -23,7 +23,7 @@ npx skills@latest add moh96af/code-review -g -y
 ```bash
 npx skills@latest add moh96af/code-review@review -g -y
 npx skills@latest add moh96af/code-review@verify-fixes -g -y
-npx skills@latest add moh96af/code-review@addressing-feedback -g -y
+npx skills@latest add moh96af/code-review@address-feedback -g -y
 ```
 
 ## Prerequisites
