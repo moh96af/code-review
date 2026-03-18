@@ -99,11 +99,13 @@ Wait for user approval before implementing.
 Two modes based on user preference:
 
 **One by one (default):**
-1. Make the change
-2. Verify no regressions (run relevant test if applicable)
-3. Present status table with updated statuses
-4. Suggest commit message (single line)
-5. Wait for user to confirm before next
+1. For each comment: verify against code, explain what's valid/invalid, present the proposed change
+2. Wait for user approval before implementing
+3. Make the change
+4. Present status table with updated statuses
+5. Suggest commit message (single line)
+6. Ask user if ready to move to next comment (they may want to discuss changes further)
+7. Move to next comment only after user confirms
 
 **Batch mode (if user requests):**
 1. Implement all approved fixes
