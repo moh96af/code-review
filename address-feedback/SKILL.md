@@ -120,14 +120,9 @@ After each fix (or batch), present the updated status table:
 | 2 | Add validation | `OrderService.php:45` | Done |
 | 3 | Remove unused import | `Helper.php:3` | Remaining |
 
-### Step 6: Handle Disagreements
+### Step 6: Handle Disagreements and Questions
 
-For comments marked "Disagree", draft a response for the user to post on Bitbucket:
-
-```
-Comment #N by [reviewer]: "[their comment]"
-Suggested reply: [technical reasoning why current approach is correct or better]
-```
+For comments marked "Disagree" or "Question", draft a ready-to-post reply immediately when presenting the comment (not deferred to a later step). The user should be able to copy-paste the reply directly to Bitbucket.
 
 ---
 
