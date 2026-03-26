@@ -42,14 +42,16 @@ Use Bitbucket MCP to get PR comments. Filter out bots (CodeRabbit, etc.) and you
 bb_get /repositories/{workspace}/{repo}/pullrequests/{id}
   jq: {title, author: author.display_name, state, source_branch: source.branch.name}
 
-# Get comment index first (skip content to save tokens)
+# Get comment index with resolution status (MUST use fields param — resolution is NOT included by default)
 bb_get /repositories/{workspace}/{repo}/pullrequests/{id}/comments
   pagelen: 50
-  jq: values[*].{id, author: user.display_name, file: inline.path, line: inline.to, resolution: resolution.type, parent_id: parent.id}
+  queryParams: fields=values.id,values.user.display_name,values.inline.path,values.inline.to,values.resolution.type,values.parent.id
+  outputFormat: json
 
-# Filter: only process comments where resolution is null (unresolved).
-# Comments with resolution.type == "comment_resolution" are resolved — skip them.
-# Also skip: bot comments (CodeRabbit, etc.), PR author's own comments, and replies (parent_id != null).
+# Filter comments:
+# - UNRESOLVED: no `resolution` key in the response object
+# - RESOLVED: has `resolution: {type: "comment_resolution"}` — skip these
+# - Also skip: bot comments (CodeRabbit, etc.), PR author's own comments, and replies (has `parent` key)
 
 # Fetch full content of each UNRESOLVED reviewer comment individually
 bb_get /repositories/{workspace}/{repo}/pullrequests/{id}/comments/{comment_id}
@@ -58,9 +60,11 @@ bb_get /repositories/{workspace}/{repo}/pullrequests/{id}/comments/{comment_id}
 
 **Token optimization:** Fetch index first (no content), identify unresolved reviewer comment IDs (skip bots, PR author, resolved comments, and replies), then fetch full content of each individually.
 
-**Important:** The Bitbucket API uses `resolution` (not `resolved`) to indicate comment status:
-- **Unresolved** → `resolution: null` (no resolution object)
-- **Resolved** → `resolution: {type: "comment_resolution", user: ..., created_on: ...}`
+**Critical: Detecting resolved comments in Bitbucket API:**
+- The `resolution` field is **NOT included** in the list endpoint by default — you MUST request it via the `fields` query parameter
+- Use `outputFormat: json` (not TOON) so you can reliably check for presence/absence of the `resolution` key
+- **Unresolved** → no `resolution` key in the comment object
+- **Resolved** → `resolution: {type: "comment_resolution"}` present
 
 ### Step 2: Summarize & Present
 
