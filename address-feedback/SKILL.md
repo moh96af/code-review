@@ -45,14 +45,22 @@ bb_get /repositories/{workspace}/{repo}/pullrequests/{id}
 # Get comment index first (skip content to save tokens)
 bb_get /repositories/{workspace}/{repo}/pullrequests/{id}/comments
   pagelen: 50
-  jq: values[*].{id, author: user.display_name, file: inline.path, line: inline.to, resolved, parent_id: parent.id}
+  jq: values[*].{id, author: user.display_name, file: inline.path, line: inline.to, resolution: resolution.type, parent_id: parent.id}
 
-# Fetch full content of each reviewer comment individually
+# Filter: only process comments where resolution is null (unresolved).
+# Comments with resolution.type == "comment_resolution" are resolved — skip them.
+# Also skip: bot comments (CodeRabbit, etc.), PR author's own comments, and replies (parent_id != null).
+
+# Fetch full content of each UNRESOLVED reviewer comment individually
 bb_get /repositories/{workspace}/{repo}/pullrequests/{id}/comments/{comment_id}
   jq: {id, content: content.raw, file: inline.path, line: inline.to}
 ```
 
-**Token optimization:** Fetch index first (no content), identify reviewer comment IDs (skip bots and PR author), then fetch each individually.
+**Token optimization:** Fetch index first (no content), identify unresolved reviewer comment IDs (skip bots, PR author, resolved comments, and replies), then fetch full content of each individually.
+
+**Important:** The Bitbucket API uses `resolution` (not `resolved`) to indicate comment status:
+- **Unresolved** → `resolution: null` (no resolution object)
+- **Resolved** → `resolution: {type: "comment_resolution", user: ..., created_on: ...}`
 
 ### Step 2: Summarize & Present
 
